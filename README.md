@@ -1,5 +1,3 @@
-<!-- Store(products) express_mysql -->
-
 ## Instalasi
 
 1. Clone repositori ini: `git clone https://github.com/yogadep/express-rest-api.git`
@@ -8,14 +6,13 @@
 
 ## Penggunaan
 
+
 ### Menjalankan Server
 
 Untuk menjalankan server, jalankan perintah berikut:
 
 ```bash
 npm start
-
-### Dokumentasi api
 
 https://documenter.getpostman.com/view/17852367/2s9YyzdyQs#e195e501-fb2d-49fa-97e6-707479f842ab
 
