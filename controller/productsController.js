@@ -2,7 +2,8 @@ const connection = require('../config/db');
 
 // Get All Products
 const getAllProducts = (req, res) => {
-    connection.query('SELECT * FROM product', (err,rows) => {
+    
+    connection.query('SELECT p.id, p.name, p.price, w.warehouse_location FROM product AS p INNER JOIN warehouse AS w ON p.id_warehouse = w.id_warehouse;', (err,rows) => {
         if(err){
             return res.status(500).json({ message: err.message });
         }
@@ -13,7 +14,7 @@ const getAllProducts = (req, res) => {
 const getProductById = (req, res) => {
     let id = req.params.id;
 
-    connection.query('SELECT * FROM product WHERE id = ?', id, (err,rows)=> {
+    connection.query('SELECT p.id, p.name, p.price, w.warehouse_location FROM product AS p INNER JOIN warehouse AS w ON p.id_warehouse = w.id_warehouse WHERE id = ?', id, (err,rows)=> {
         if(err){
             return res.status(500).json({ message: err.message });
         }
@@ -23,11 +24,10 @@ const getProductById = (req, res) => {
 
 // Add Product
 const createProduct = (req,res) => {
-    let name = req.body.name;
-    let price = req.body.price;
+    let { name, price, id_warehouse } = req.body;
 
-    if(!name || !price){
-        return res.status(400).json({ message: 'Field name dan price harus diisi dengan lengkap' });
+    if(!name || !price || !id_warehouse){
+        return res.status(400).json({ message: 'Field name, price dan id warehouse harus diisi dengan lengkap' });
     }
 
     if(isNaN(price)){
@@ -36,7 +36,8 @@ const createProduct = (req,res) => {
 
     let formData = {
         name,
-        price
+        price,
+        id_warehouse,
     }
     connection.query('INSERT INTO product SET ?', formData, (err, result) => {
         if (err) {
@@ -50,11 +51,10 @@ const createProduct = (req,res) => {
 // Update Product
 const updateProduct = (req, res) => {
     let id = req.params.id;
-    let name = req.body.name;
-    let price = req.body.price;
+    let { name, price, id_warehouse } = req.body;
 
-    if(!name || !price){
-        return res.status(400).json({ message: 'Field name dan price harus diisi dengan lengkap' });
+    if(!name || !price || !id_warehouse){
+        return res.status(400).json({ message: 'Field name, price dan id warehouse harus diisi dengan lengkap' });
     };
 
     if(isNaN(price)){
@@ -63,11 +63,12 @@ const updateProduct = (req, res) => {
 
     let formData = {
         name,
-        price
+        price,
+        id_warehouse,
     }
     connection.query('UPDATE product SET ? WHERE id = ?', [formData, id], (err, result) => {
         if (err) {
-            return res.status(500).json({ message: 'Terjadi kesalahan saat mengubah data' });
+            return res.status(500).json({ message: 'Terjadi kesalahan saat mengubah data', err });
         } else {     
             res.json({ success: true, message: 'Data Berhasil Diubah!' });           
         }
