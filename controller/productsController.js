@@ -2,7 +2,7 @@ const connection = require('../config/db');
 
 // Get All Products
 const getAllProducts = (req, res) => {
-    
+   
     connection.query('SELECT p.id, p.name, p.price, w.warehouse_location FROM product AS p INNER JOIN warehouse AS w ON p.id_warehouse = w.id_warehouse;', (err,rows) => {
         if(err){
             return res.status(500).json({ message: err.message });

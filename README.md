@@ -14,6 +14,6 @@ Untuk menjalankan server, jalankan perintah berikut:
 ```bash
 npm start
 
-https://documenter.getpostman.com/view/17852367/2s9YyzdyQs#e195e501-fb2d-49fa-97e6-707479f842ab
+https://documenter.getpostman.com/view/17852367/2s9YyzdyQs
 
 
